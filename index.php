@@ -27,13 +27,13 @@ include( 'admin/includes/functions.php' );
   <?php
 
   $query = 'SELECT *
-    FROM projects
-    ORDER BY date DESC';
+    FROM courses
+    ORDER BY DESC';
   $result = mysqli_query( $connect, $query );
 
   ?>
 
-  <p>There are <?php echo mysqli_num_rows($result); ?> projects in the database!</p>
+  <p>There are <?php echo mysqli_num_rows($result); ?> courses in the database!</p>
 
   <hr>
 
