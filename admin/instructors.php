@@ -61,6 +61,7 @@ $result = mysqli_query($connect, $query);
           echo $count['count'];
         ?>
       </td>
+      <td align="center"><a href="instructors_photo.php?id=<?php echo $record['id']; ?>">Photo</i></a></td>
       <td align="center"><a href="instructors_edit.php?id=<?php echo $record['id']; ?>">Edit</a></td>
       <td align="center">
         <a href="instructors.php?delete=<?php echo $record['id']; ?>" onclick="return confirm('Are you sure you want to delete this instructor?');">Delete</a>
