@@ -57,3 +57,37 @@ function get_message()
   }
   
 }
+
+function send_email($to, $subject, $message) {
+  $headers = "From: no-reply@yourdomain.com\r\n";
+  $headers .= "Reply-To: no-reply@yourdomain.com\r\n";
+  $headers .= "MIME-Version: 1.0\r\n";
+  $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+  
+  return mail($to, $subject, $message, $headers);
+}
+function display_messages() {
+  if (isset($_SESSION['message'])) {
+      echo '<div class="alert alert-success">' . $_SESSION['message'] . '</div>';
+      unset($_SESSION['message']);
+  }
+  
+  if (isset($_SESSION['error'])) {
+      echo '<div class="alert alert-danger">' . $_SESSION['error'] . '</div>';
+      unset($_SESSION['error']);
+  }
+}
+function display_html_content($content, $default = '') {
+  if (empty($content)) {
+      return '<p class="text-muted">' . htmlspecialchars($default) . '</p>';
+  }
+  
+  $allowed_tags = '<p><br><strong><em><u><ol><ul><li><a><img><h1><h2><h3><h4><h5><h6>';
+  $clean_content = strip_tags($content, $allowed_tags);
+  
+  if (strip_tags($clean_content) === $clean_content) {
+      return nl2br(htmlspecialchars($clean_content));
+  }
+  
+  return $clean_content;
+}
