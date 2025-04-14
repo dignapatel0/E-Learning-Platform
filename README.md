@@ -34,8 +34,6 @@ This is a custom-built Content Management System (CMS) based E-learning platform
 
 ---
 
----
-
 ## 🛠️ Tech Stack
 ### Frontend:
 - HTML5  
