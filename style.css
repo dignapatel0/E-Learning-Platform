@@ -1,0 +1,387 @@
+/* Reset and body setup */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.navbar {
+    background-color: #212529 !important;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .navbar-brand {
+    color: #ffffff !important;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+  
+  .navbar-nav .nav-link {
+    color: #ffffff !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link.active {
+    color: #0d6efd !important;
+    border-bottom: 2px solid #0d6efd;
+    padding-bottom: 0.2rem;
+  }
+  
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/background.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+}
+
+/* Stats Counter */
+.stats-counter {
+    margin-top: 50px;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.card-img-top {
+    height: 180px;
+    object-fit: cover;
+}
+
+/* Featured Courses */
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 0.875rem;
+}
+
+.btn-outline-primary {
+    border-color: #007bff;
+    color: #007bff;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.bg-primary {
+    background-color: #007bff !important;
+}
+/* Footer */
+footer {
+    background-color: #212529;
+    color: white;
+    padding: 40px 0;
+}
+
+footer a {
+    color: white;
+}
+
+footer a:hover {
+    color: #007bff;
+}
+
+.social-links a {
+    font-size: 1.5rem;
+    margin-right: 15px;
+}
+
+.social-links a:hover {
+    color: #007bff;
+}
+
+footer .container {
+    max-width: 1140px; 
+    padding-left: 15px; 
+    padding-right: 15px;
+}
+
+footer .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+}
+
+footer .col-lg-4, footer .col-lg-2, footer .col-md-6 {
+    padding-left: 15px;  
+    padding-right: 15px;
+}
+
+footer .col-lg-4 {
+    margin-bottom: 30px;
+}
+
+footer .col-lg-2 {
+    margin-bottom: 30px; 
+}
+
+footer .col-lg-2.social-links {
+    margin-bottom: 30px; 
+}
+
+footer .col-lg-2.newsletter {
+    margin-bottom: 30px; 
+}
+
+footer .social-links {
+    margin-top: 20px; 
+}
+
+footer .input-group {
+    width: 100%; 
+    max-width: 350px; 
+    margin-top: 15px; 
+}
+
+footer .input-group input {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px 0 0 5px; 
+}
+
+footer .input-group button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    border: none;
+}
+
+footer .input-group button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Course Style */
+.course-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background-color: white;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+.course-page .course-details {
+    margin-top: 50px;
+}
+
+.course-page .course-details h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #212529;
+}
+
+.course-page .course-description {
+    font-size: 1.125rem;
+    color: #555;
+}
+
+.course-page .instructor-info {
+    font-size: 1rem;
+    color: #007bff;
+}
+
+.course-page .enroll-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+.course-page .enroll-btn:hover {
+    background-color: #0056b3;
+}
+
+.course-page .course-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background-color: white;
+}
+
+.course-page .course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.course-page .lesson-count {
+    background-color: #ffffffcc;
+    border-radius: 1rem;
+    padding: 3px 10px;
+    font-size: 0.8rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.course-page .card-body p.card-text {
+    font-size: 0.875rem;
+    color: #555;
+}
+
+.course-page .card-footer {
+    background-color: transparent;
+}
+
+.lesson-count {
+    background-color: #ffffffcc;
+    border-radius: 1rem;
+    padding: 3px 10px;
+    font-size: 0.8rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.card-body p.card-text {
+    font-size: 0.875rem;
+    color: #555;
+}
+
+.card-footer {
+    background-color: transparent;
+}
+
+.btn-outline-secondary.dropdown-toggle {
+    color: #333;
+    border-color: #ccc;
+}
+
+.btn-outline-secondary.dropdown-toggle:hover {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.enroll-stats-detailed .stat-card {
+    background: #fff;
+    border-radius: 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+  
+  .enroll-stats-detailed .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  }
+  
+  .enroll-stats-detailed .icon-wrapper {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .enroll-stats-detailed .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: #333;
+  }
+  
+  .enroll-stats-detailed .stat-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  
+  .enroll-stats-detailed .stat-desc {
+    color: #777;
+  }
+  
+  
+
+/* Instructors Page Styles */
+.instructor-card {
+    border-radius: 0.75rem;
+    background-color: white;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.instructor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.instructor-card .card-body {
+    padding: 1.5rem;
+}
+
+.instructor-card .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.instructor-card .card-text {
+    font-size: 0.875rem;
+    color: #555;
+}
+
+.instructor-card .card-text a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.instructor-card .card-text a:hover {
+    text-decoration: underline;
+}
+
+.instructor-card .card-img-top {
+    width: 100%;
+    height: 180px; 
+    object-fit: cover; 
+    object-position: center; 
+}
+
+.instructor-card .card-img-top {
+    height: auto;
+    max-height: 180px;
+    object-fit: contain;
+}
+
+

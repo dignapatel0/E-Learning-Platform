@@ -10,166 +10,178 @@ include('admin/includes/functions.php');
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>E-Learning Platform</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="styles.css" type="text/css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top modern-dark-navbar">
     <div class="container">
-      <a class="navbar-brand" href="index.php"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <a class="navbar-brand fw-bold text-uppercase" href="index.php">E-Learning</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="index.php">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="courses.php">Courses</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="instructors.php">Instructors</a>
-          </li>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav gap-3">
+            <li class="nav-item">
+            <a class="nav-link nav-custom active" href="index.php">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link nav-custom" href="courses.php">Courses</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link nav-custom" href="instructors.php">Instructors</a>
+            </li>
         </ul>
-      </div>
+        </div>
     </div>
-  </nav>
+    </nav>
 
-  <div class="container my-5">
-    <div class="row">
-      <div class="col-lg-8">
-        <h1 class="display-4 mb-4">Welcome to Our E-Learning Platform</h1>
-        <p class="lead">Expand your knowledge with our expert-led courses</p>
+    <!-- Hero Section -->
+    <section class="hero-section text-center py-5">
+        <div class="container">
+        <h1 class="display-4 fw-bold mb-4">Expand Your Knowledge</h1>
+        <p class="lead">Learn from industry experts with our comprehensive online courses</p>
+        <a href="courses.php" class="btn btn-primary btn-lg px-4 me-2">Browse Courses</a>
+        </div>
+    </section>
+
+    <!-- Enroll Stats Section -->
+    <section class="container my-5">
+    <div class="row g-4 text-center enroll-stats-detailed">
+    <?php
+        $courses_count = mysqli_num_rows(mysqli_query($connect, 'SELECT * FROM courses'));
+        $lessons_count = mysqli_num_rows(mysqli_query($connect, 'SELECT * FROM lessons'));
+        $instructors_count = mysqli_num_rows(mysqli_query($connect, 'SELECT * FROM instructors'));
+        ?>
+        <div class="col-md-4">
+        <div class="stat-card p-4 rounded shadow bg-light h-100">
+            <div class="icon-wrapper bg-primary text-white mb-3">
+            <i class="fas fa-book fa-2x"></i>
+            </div>
+            <h3 class="stat-number"><?php echo $courses_count; ?></h3>
+            <p class="stat-title text-muted mb-1">Total Courses Available</p>
+            <p class="stat-desc small">Browse a wide variety of topics and categories.</p>
+        </div>
+        </div>
+        <div class="col-md-4">
+        <div class="stat-card p-4 rounded shadow bg-light h-100">
+            <div class="icon-wrapper bg-success text-white mb-3">
+            <i class="fas fa-video fa-2x"></i>
+            </div>
+            <h3 class="stat-number"><?php echo $lessons_count; ?></h3>
+            <p class="stat-title text-muted mb-1">Engaging Video Lessons</p>
+            <p class="stat-desc small">Hands-on learning with interactive content.</p>
+        </div>
+        </div>
+        <div class="col-md-4">
+        <div class="stat-card p-4 rounded shadow bg-light h-100">
+            <div class="icon-wrapper bg-warning text-white mb-3">
+            <i class="fas fa-chalkboard-teacher fa-2x"></i>
+            </div>
+            <h3 class="stat-number"><?php echo $instructors_count; ?></h3>
+            <p class="stat-title text-muted mb-1">Expert Instructors</p>
+            <p class="stat-desc small">Learn from experienced professionals and mentors.</p>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Featured Courses -->
+    <section class="container mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Featured Courses</h2>
+        <a href="courses.php" class="btn btn-outline-primary">View All</a>
+        </div>
         
-        <div class="row">
-          <?php
-          // Get featured courses
-          $query = 'SELECT courses.*, instructors.name as instructor_name 
-                    FROM courses 
-                    LEFT JOIN instructors ON courses.instructor_id = instructors.id
-                    ORDER BY created_at DESC LIMIT 3';
-          $result = mysqli_query($connect, $query);
-          
-          while($course = mysqli_fetch_assoc($result)):
-          ?>
-          <div class="col-md-4 mb-4">
+        <div class="row g-4">
+        <?php
+        $query = 'SELECT c.*, i.name as instructor_name 
+                    FROM courses c
+                    LEFT JOIN instructors i ON c.instructor_id = i.id
+                    ORDER BY c.created_at DESC LIMIT 4';
+        $result = mysqli_query($connect, $query);
+        
+        while($course = mysqli_fetch_assoc($result)):
+        ?>
+        <div class="col-md-6 col-lg-3">
             <div class="card h-100">
-              <?php if($course['image']): ?>
-                <img src="<?php echo $course['image']; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($course['title']); ?>">
-              <?php else: ?>
-                <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 150px;">
-                  <i class="fas fa-book fa-3x"></i>
-                </div>
-              <?php endif; ?>
-              <div class="card-body">
+            <div class="position-relative">
+                <?php if($course['image'] && file_exists('images/' . $course['image'])): ?>
+                    <img src="images/<?php echo htmlspecialchars($course['image']); ?>" 
+                        class="card-img-top" 
+                        alt="<?php echo htmlspecialchars($course['title']); ?>" 
+                        style="height: 180px; object-fit: cover;">
+                    <?php else: ?>
+                    <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 180px;">
+                        <i class="fas fa-book fa-3x"></i>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="card-body">
                 <h5 class="card-title"><?php echo htmlspecialchars($course['title']); ?></h5>
-                <p class="card-text text-muted">
-                  <small>By <?php echo htmlspecialchars($course['instructor_name'] ?? 'Unknown Instructor'); ?></small>
+                <p class="card-text text-muted small mb-2">
+                <i class="fas fa-chalkboard-teacher"></i> <?php echo htmlspecialchars($course['instructor_name'] ?? 'Unknown Instructor'); ?>
                 </p>
-                <p class="card-text"><?php echo substr(htmlspecialchars($course['description']), 0, 100); ?>...</p>
-              </div>
-              <div class="card-footer bg-transparent">
-                <a href="course.php?id=<?php echo $course['id']; ?>" class="btn btn-primary">View Course</a>
-              </div>
+                <p class="card-text"><?php echo substr(htmlspecialchars($course['description'] ?? ''), 0, 80); ?>...</p>
             </div>
-          </div>
-          <?php endwhile; ?>
+            <div class="card-footer bg-transparent border-top-0">
+                <a href="course.php?id=<?php echo $course['id']; ?>" class="btn btn-sm btn-outline-primary">View Course</a>
+            </div>
+            </div>
         </div>
-        
-        <div class="text-center mt-4">
-          <a href="courses.php" class="btn btn-outline-primary">View All Courses</a>
+        <?php endwhile; ?>
         </div>
-      </div>
-      
-      <div class="col-lg-4">
-        <div class="card mb-4">
-          <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Top Instructors</h5>
-          </div>
-          <div class="card-body">
-            <?php
-            $query = 'SELECT * FROM instructors ORDER BY RAND() LIMIT 3';
-            $result = mysqli_query($connect, $query);
-            
-            while($instructor = mysqli_fetch_assoc($result)):
-            ?>
-            <div class="d-flex mb-3">
-              <?php if($instructor['photo']): ?>
-                <img src="<?php echo $instructor['photo']; ?>" class="rounded-circle me-3" width="64" height="64" alt="<?php echo htmlspecialchars($instructor['name']); ?>">
-              <?php else: ?>
-                <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width: 64px; height: 64px;">
-                  <i class="fas fa-user fa-2x"></i>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+            <div class="col-lg-3 mb-4 mb-lg-0">
+                <h5 class="fw-bold mb-3">About Us</h5>
+                <p>We provide high-quality online courses taught by industry experts to help you advance your career.</p>
+                <div class="social-links mt-3">
+                <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="text-white me-3"><i class="fab fa-youtube"></i></a> <!-- Added YouTube -->
                 </div>
-              <?php endif; ?>
-              <div>
-                <h6 class="mb-1"><?php echo htmlspecialchars($instructor['name']); ?></h6>
-                <p class="text-muted small mb-1"><?php echo substr(htmlspecialchars($instructor['bio']), 0, 50); ?>...</p>
-                <a href="instructor.php?id=<?php echo $instructor['id']; ?>" class="btn btn-sm btn-outline-primary">View Profile</a>
-              </div>
             </div>
-            <?php endwhile; ?>
-          </div>
-        </div>
-        
-        <div class="card">
-          <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Recent Lessons</h5>
-          </div>
-          <div class="list-group list-group-flush">
-            <?php
-            $query = 'SELECT lessons.*, courses.title as course_title 
-                      FROM lessons 
-                      JOIN courses ON lessons.course_id = courses.id
-                      ORDER BY lessons.id DESC LIMIT 5';
-            $result = mysqli_query($connect, $query);
-            
-            while($lesson = mysqli_fetch_assoc($result)):
-            ?>
-            <a href="lesson.php?id=<?php echo $lesson['id']; ?>" class="list-group-item list-group-item-action">
-              <div class="d-flex w-100 justify-content-between">
-                <h6 class="mb-1"><?php echo htmlspecialchars($lesson['title']); ?></h6>
-                <small><?php echo $lesson['duration']; ?> min</small>
-              </div>
-              <small class="text-muted"><?php echo htmlspecialchars($lesson['course_title']); ?></small>
-            </a>
-            <?php endwhile; ?>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <footer class="bg-dark text-white py-4 mt-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <h5>About Our Platform</h5>
-          <p>We provide high-quality online courses taught by industry experts.</p>
-        </div>
-        <div class="col-md-3">
-          <h5>Quick Links</h5>
-          <ul class="list-unstyled">
-            <li><a href="courses.php" class="text-white">All Courses</a></li>
-            <li><a href="instructors.php" class="text-white">Instructors</a></li>
-          </ul>
-        </div>
-        <div class="col-md-3">
-          <h5>Connect With Us</h5>
-          <div class="social-links">
-            <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="text-white me-2"><i class="fab fa-linkedin-in"></i></a>
-          </div>
-        </div>
-      </div>
-      <hr>
-      <div class="text-center">
-        <p class="mb-0">&copy; <?php echo date('Y'); ?>. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+            <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                <h5 class="fw-bold mb-3">Quick Links</h5>
+                <ul class="list-unstyled">
+                <li class="mb-2"><a href="index.php" class="text-white">Home</a></li>
+                <li class="mb-2"><a href="courses.php" class="text-white">Courses</a></li>
+                <li class="mb-2"><a href="instructors.php" class="text-white">Instructors</a></li>
+                </ul>
+            </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="fw-bold mb-3">Contact Us</h5>
+                <p>Have any questions or need support? Reach out to us!</p>
+                <ul class="list-unstyled">
+                <li><i class="fas fa-phone-alt"></i> (123) 456-7890</li>
+                <li><i class="fas fa-envelope"></i> support@elearning.com</li>
+                <li><i class="fas fa-map-marker-alt"></i> 1234 Education St, Learning City</li>
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="fw-bold mb-3">Subscribe to Our Newsletter</h5>
+                <p>Stay updated with the latest courses, news, and promotions by signing up for our newsletter!</p>
+                <form action="#" method="POST">
+                <div class="input-group">
+                    <input type="email" class="form-control" placeholder="Your email" required>
+                    <button class="btn btn-primary" type="submit">Subscribe</button>
+                </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
