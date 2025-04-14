@@ -85,17 +85,6 @@ $stats = [
                         </div>
                     </div>
                     
-                    <div class="col-md-4 mb-3">
-                        <div class="card stat-card h-100">
-                            <div class="card-body">
-                                <h5 class="card-title text-muted">Enrollments</h5>
-                                <h2 class="mb-0"><?php echo $stats['enrollments']; ?></h2>
-                            </div>
-                            <div class="card-footer bg-transparent">
-                                <a href="enrollments.php" class="btn btn-sm btn-outline-primary">Manage</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </main>
         </div>

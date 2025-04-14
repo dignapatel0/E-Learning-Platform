@@ -51,11 +51,6 @@
             <i class="fas fa-users"></i> Users
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link <?php echo ($current_page == 'enrollments.php') ? 'active' : ''; ?>" href="enrollments.php">
-            <i class="fas fa-clipboard-list"></i> Enrollments
-          </a>
-        </li>
       </ul>
       
       <div class="user-info mt-auto">
