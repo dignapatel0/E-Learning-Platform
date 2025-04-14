@@ -6,14 +6,6 @@ include('admin/includes/functions.php');
 if (isset($_GET['course_id'])) {
     $course_id = (int)$_GET['course_id'];
 
-    // Enroll the user anonymously (if not already enrolled)
-    $check = mysqli_query($connect, "SELECT id FROM enrollments WHERE course_id = $course_id");
-    if (mysqli_num_rows($check) === 0) {
-        $stmt = $connect->prepare("INSERT INTO enrollments (course_id, enrolled_at) VALUES (?, NOW())");
-        $stmt->bind_param("i", $course_id);
-        $stmt->execute();
-    }
-
     // Get course details
     $course_query = mysqli_query($connect, "
         SELECT c.*, i.name AS instructor_name 

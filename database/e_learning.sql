@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2025 at 05:07 AM
+-- Generation Time: Apr 14, 2025 at 09:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -47,30 +47,6 @@ INSERT INTO `courses` (`id`, `title`, `description`, `instructor_id`, `category`
 (3, 'Back-End Development with Node.js', 'A deep dive into Node.js for building scalable and efficient back-end services with RESTful APIs.', 4, 'Back-End Development', 'c2.png', '2025-04-13 18:08:28'),
 (4, 'Front-End Development with React', 'Master front-end development by learning React and its ecosystem for building modern web applications.', 2, 'Front-End Development', 'c4.png', '2025-04-13 18:08:28'),
 (5, 'User Experience Design (IXD)', 'Learn the principles of interaction design, user research, and usability testing for web and mobile interfaces.', 5, 'IXD Design', 'c5.png', '2025-04-13 18:08:28');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `enrollments`
---
-
-CREATE TABLE `enrollments` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `course_id` int(11) NOT NULL,
-  `enrolled_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `completed` enum('Yes','No') NOT NULL DEFAULT 'No'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `enrollments`
---
-
-INSERT INTO `enrollments` (`id`, `user_id`, `course_id`, `enrolled_at`, `completed`) VALUES
-(1, 1, 1, '2025-04-13 18:59:36', 'No'),
-(2, 2, 2, '2025-04-13 18:59:36', 'Yes'),
-(10, NULL, 1, '2025-04-13 22:34:32', 'No'),
-(11, NULL, 1, '2025-04-13 22:34:42', 'No');
 
 -- --------------------------------------------------------
 
@@ -162,15 +138,6 @@ ALTER TABLE `courses`
   ADD KEY `instructor_id` (`instructor_id`);
 
 --
--- Indexes for table `enrollments`
---
-ALTER TABLE `enrollments`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_course` (`user_id`,`course_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `course_id` (`course_id`);
-
---
 -- Indexes for table `instructors`
 --
 ALTER TABLE `instructors`
@@ -200,12 +167,6 @@ ALTER TABLE `courses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `enrollments`
---
-ALTER TABLE `enrollments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
 -- AUTO_INCREMENT for table `instructors`
 --
 ALTER TABLE `instructors`
@@ -232,12 +193,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `courses`
   ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`instructor_id`) REFERENCES `instructors` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `enrollments`
---
-ALTER TABLE `enrollments`
-  ADD CONSTRAINT `fk_course` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `lessons`

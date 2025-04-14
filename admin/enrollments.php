@@ -6,24 +6,6 @@ include('includes/functions.php');
 
 secure();
 
-if (isset($_GET['delete'])) {
-    $query = 'DELETE FROM enrollments 
-              WHERE id = ' . $_GET['delete'] . ' 
-              LIMIT 1';
-    mysqli_query($connect, $query);
-    
-    set_message('Enrollment has been deleted');
-    header('Location: enrollments.php');
-    die();
-}
-
-$query = 'SELECT e.*, u.email as user_email, c.title as course_title
-          FROM enrollments e
-          JOIN users u ON e.user_id = u.id
-          JOIN courses c ON e.course_id = c.id
-          ORDER BY e.enrolled_at DESC';
-$result = mysqli_query($connect, $query);
-
 include('includes/header.php');
 ?>
 
