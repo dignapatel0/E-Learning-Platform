@@ -16,8 +16,7 @@ $stats = [
     'courses' => mysqli_fetch_assoc(mysqli_query($connect, "SELECT COUNT(*) as count FROM courses"))['count'],
     'lessons' => mysqli_fetch_assoc(mysqli_query($connect, "SELECT COUNT(*) as count FROM lessons"))['count'],
     'instructors' => mysqli_fetch_assoc(mysqli_query($connect, "SELECT COUNT(*) as count FROM instructors"))['count'],
-    'users' => mysqli_fetch_assoc(mysqli_query($connect, "SELECT COUNT(*) as count FROM users"))['count'],
-    'enrollments' => mysqli_fetch_assoc(mysqli_query($connect, "SELECT COUNT(*) as count FROM enrollments"))['count']
+    'users' => mysqli_fetch_assoc(mysqli_query($connect, "SELECT COUNT(*) as count FROM users"))['count']
 ];
 ?>
 
