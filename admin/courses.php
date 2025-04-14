@@ -7,31 +7,38 @@ include('includes/functions.php');
 secure();
 
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
-    // First delete the image if it exists
+    $course_id = (int)$_GET['delete'];
+
+    // First, fetch the course to check for the image and related data
     $query = 'SELECT image FROM courses WHERE id = ?';
     $stmt = mysqli_prepare($connect, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $_GET['delete']);
+    mysqli_stmt_bind_param($stmt, 'i', $course_id);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
-    $image = mysqli_fetch_assoc($result)['image'];
+    $course = mysqli_fetch_assoc($result);
     
-    if ($image && file_exists($image)) {
-        unlink($image);
+    // Check if there is an image and delete it if it exists
+    if ($course['image'] && file_exists('images/' . $course['image'])) {
+        unlink('images/' . $course['image']);
     }
     
-    // Then delete the course
+    // Now delete the course from the database
     $query = 'DELETE FROM courses WHERE id = ? LIMIT 1';
     $stmt = mysqli_prepare($connect, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $_GET['delete']);
+    mysqli_stmt_bind_param($stmt, 'i', $course_id);
     mysqli_stmt_execute($stmt);
-    
+
+    // Set the success message
     set_message('Course has been deleted');
-    header('Location: ' . ADMIN_URL . 'courses.php');
+    
+    // Redirect to the courses page
+    header('Location: courses.php');
     die();
 }
 
 include('includes/header.php');
 
+// Fetch all courses with their instructor names
 $query = 'SELECT courses.*, instructors.name as instructor_name
           FROM courses
           LEFT JOIN instructors ON courses.instructor_id = instructors.id
@@ -41,13 +48,13 @@ $result = mysqli_query($connect, $query);
 
 <div class="container">
     <h2 class="my-4 text-center">Manage Courses</h2>
-    
+
     <div class="mb-3">
         <a href="courses_add.php" class="btn-add">
         <i class="fas fa-plus-square"></i> Add New Course
         </a>
     </div>
-    
+
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
@@ -64,8 +71,8 @@ $result = mysqli_query($connect, $query);
                 <?php while ($record = mysqli_fetch_assoc($result)): ?>
                     <tr class="course-row">
                         <td class="text-center">
-                            <?php if (!empty($record['image']) && file_exists($record['image'])): ?>
-                                <img src="<?= htmlspecialchars($record['image']) ?>" 
+                            <?php if (!empty($record['image']) && file_exists('images/' . $record['image'])): ?>
+                                <img src="images/<?= htmlspecialchars($record['image']) ?>" 
                                      class="img-thumbnail course-img"
                                      alt="<?= htmlspecialchars($record['title']) ?>">
                             <?php else: ?>
@@ -113,4 +120,3 @@ $result = mysqli_query($connect, $query);
 </div>
 
 <?php include('includes/footer.php'); ?>
-

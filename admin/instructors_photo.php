@@ -6,7 +6,7 @@ include('includes/functions.php');
 secure();
 
 // Configuration
-$upload_dir = 'instructors_images/';
+$upload_dir = 'images/';
 $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
 $max_size = 2 * 1024 * 1024; // 2MB
 
@@ -19,7 +19,6 @@ $instructor_id = (int)$_GET['id'];
 
 // Handle photo upload
 if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
-    // Validate file
     if (!in_array($_FILES['photo']['type'], $allowed_types)) {
         set_message('Invalid file type. Only JPG, PNG, or GIF allowed.', 'error');
         header("Location: instructors_photo.php?id=$instructor_id");
@@ -32,12 +31,12 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
         die();
     }
 
-    // Create upload directory if it doesn't exist
+    // Create upload directory if not exists
     if (!file_exists($upload_dir)) {
         mkdir($upload_dir, 0755, true);
     }
 
-    // Get current photo to delete later
+    // Get current photo from DB to delete later
     $query = 'SELECT photo FROM instructors WHERE id = ?';
     $stmt = mysqli_prepare($connect, $query);
     mysqli_stmt_bind_param($stmt, 'i', $instructor_id);
@@ -45,22 +44,21 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
     $result = mysqli_stmt_get_result($stmt);
     $old_photo = mysqli_fetch_assoc($result)['photo'];
 
-    // Generate unique filename
-    $ext = pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
-    $filename = "instructor_{$instructor_id}_" . time() . ".$ext";
+    // Use original filename
+    $filename = basename($_FILES['photo']['name']);
     $destination = $upload_dir . $filename;
 
     // Move uploaded file
     if (move_uploaded_file($_FILES['photo']['tmp_name'], $destination)) {
-        // Update database with file path
+        // Save only filename in DB
         $query = 'UPDATE instructors SET photo = ? WHERE id = ?';
         $stmt = mysqli_prepare($connect, $query);
-        mysqli_stmt_bind_param($stmt, 'si', $destination, $instructor_id);
+        mysqli_stmt_bind_param($stmt, 'si', $filename, $instructor_id);
         mysqli_stmt_execute($stmt);
 
         // Delete old photo if it exists
-        if ($old_photo && file_exists($old_photo)) {
-            unlink($old_photo);
+        if ($old_photo && file_exists($upload_dir . $old_photo)) {
+            unlink($upload_dir . $old_photo);
         }
 
         set_message('Instructor photo updated successfully');
@@ -74,7 +72,6 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
 
 // Handle photo deletion
 if (isset($_GET['delete'])) {
-    // Get current photo
     $query = 'SELECT photo FROM instructors WHERE id = ?';
     $stmt = mysqli_prepare($connect, $query);
     mysqli_stmt_bind_param($stmt, 'i', $instructor_id);
@@ -82,11 +79,11 @@ if (isset($_GET['delete'])) {
     $result = mysqli_stmt_get_result($stmt);
     $photo = mysqli_fetch_assoc($result)['photo'];
 
-    if ($photo && file_exists($photo)) {
-        unlink($photo);
+    if ($photo && file_exists($upload_dir . $photo)) {
+        unlink($upload_dir . $photo);
     }
 
-    // Clear photo path from database
+    // Clear DB
     $query = 'UPDATE instructors SET photo = NULL WHERE id = ?';
     $stmt = mysqli_prepare($connect, $query);
     mysqli_stmt_bind_param($stmt, 'i', $instructor_id);
@@ -97,7 +94,7 @@ if (isset($_GET['delete'])) {
     die();
 }
 
-// Get instructor data
+// Fetch instructor record
 $query = 'SELECT * FROM instructors WHERE id = ?';
 $stmt = mysqli_prepare($connect, $query);
 mysqli_stmt_bind_param($stmt, 'i', $instructor_id);
@@ -115,16 +112,16 @@ include('includes/header.php');
 
 <div class="container">
     <h2>Edit Instructor Photo</h2>
-    
+
     <div class="row">
         <div class="col-md-6">
-            <?php if (!empty($record['photo']) && file_exists($record['photo'])): ?>
+            <?php if (!empty($record['photo']) && file_exists("../images/" . $record['photo'])): ?>
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5>Current Photo</h5>
                     </div>
                     <div class="card-body text-center">
-                        <img src="<?= htmlspecialchars($record['photo']) ?>" 
+                        <img src="../images/<?= htmlspecialchars($record['photo']) ?>" 
                              class="rounded-circle"
                              style="width: 200px; height: 200px; object-fit: cover;">
                         <div class="mt-3">
@@ -140,7 +137,7 @@ include('includes/header.php');
                 <div class="alert alert-info">No photo uploaded yet</div>
             <?php endif; ?>
         </div>
-        
+
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
@@ -161,7 +158,7 @@ include('includes/header.php');
             </div>
         </div>
     </div>
-    
+
     <div class="mt-4">
         <a href="instructors.php" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Return to Instructor List
