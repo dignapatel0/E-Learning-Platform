@@ -64,8 +64,8 @@ Copy the cloned files into your server's root directory (e.g., `htdocs` for XAMP
 
 3. **Create the Database**:
 - Open phpMyAdmin or your preferred database tool.
-- Create a new database (e.g., `e-learning`).
-- Import the SQL file (`e-learning.sql`) provided in the database folder to set up tables.
+- Create a new database (e.g., `e_learning`).
+- Import the SQL file (`e_learning.sql`) provided in the database folder to set up tables.
 
 4. **Configure Database Connection**:
 - Open `config.php`.
@@ -74,7 +74,7 @@ Copy the cloned files into your server's root directory (e.g., `htdocs` for XAMP
   $db_host = 'localhost';
   $db_user = 'root';
   $db_pass = '';
-  $db_name = 'e-learning';
+  $db_name = 'e_learning';
   ```
 
 5. **Run the Project**:
