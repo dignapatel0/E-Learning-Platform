@@ -19,7 +19,7 @@ This is a custom-built Content Management System (CMS) based E-learning platform
 - Browse all available courses
 - View detailed course and instructor pages
 - Watch video lessons
-- Enroll in courses (anonymous or with login in future)
+- Enroll in courses (with login in future)
 - Responsive layout with a modern UI
 
 ---
@@ -29,8 +29,7 @@ This is a custom-built Content Management System (CMS) based E-learning platform
 - `courses`: Holds all course information
 - `instructors`: Instructor details
 - `lessons`: Lessons linked to a course
-- `enrollments`: Anonymous enrollments (simulated tracking)
-- `users` (optional for tracking active users)
+- `users`: Holds admin information (user information in future with Role)
 
 ---
 
@@ -44,9 +43,6 @@ This is a custom-built Content Management System (CMS) based E-learning platform
 ### Backend:
 - PHP 7+  
 - MySQL  
-
-### Design:
-- Modern layout using custom CSS and responsive grid  
 
 ---
 
@@ -66,12 +62,12 @@ Copy the cloned files into your server's root directory (e.g., `htdocs` for XAMP
 - Import the SQL file (`e_learning.sql`) provided in the database folder to set up tables.
 
 4. **Configure Database Connection**:
-- Open `config.php`.
-- Update the database credentials:
+- Create `.env`.
+- Add your database credentials:
   ```
   $db_host = 'localhost';
-  $db_user = 'root';
-  $db_pass = '';
+  $db_user = 'your username';
+  $db_pass = 'your password';
   $db_name = 'e_learning';
   ```
 
@@ -79,7 +75,7 @@ Copy the cloned files into your server's root directory (e.g., `htdocs` for XAMP
 - Start your server (e.g., XAMPP).
 - Access the project via `http://localhost/E-Learning-Platform`.
 
-6. **Admin Login Credentials** *(Default)*:
+6. **Admin Login Credentials**:
 - Username: `digna@example.com`
 - Password: `password`
 
